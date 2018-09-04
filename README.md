@@ -9,12 +9,7 @@
 ABOUT THE FRAMEWORK
 -------------------
 
-Medinfi Analytics is build using Yii2 Framework, Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
-
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+Medinfi Analytics is build using Yii2 Framework, Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/)
 
 DIRECTORY STRUCTURE
 -------------------
@@ -23,9 +18,11 @@ DIRECTORY STRUCTURE
       commands/           contains console commands (controllers)
       config/             contains application configurations
       controllers/        contains Web controller classes
+      dao/                contains Data Access Object Class
       mail/               contains view files for e-mails
       models/             contains model classes
       runtime/            contains files generated during runtime
+      services/           contains services class
       tests/              contains various tests for the basic application
       vendor/             contains dependent 3rd-party packages
       views/              contains view files for the Web application
@@ -79,7 +76,6 @@ You can then access the application through the following URL:
 ~~~
 http://localhost/basic/web/
 ~~~
-
 
 ### Install with Docker
 
