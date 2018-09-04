@@ -1,7 +1,7 @@
 const api = {
     "getFlterData" : "index.php?r=medinfi-analytics/get-filter-data",
     "getProjectList" : "index.php?r=medinfi-analytics/get-project-list",
-    "getProject" : "index.php?r=medinfi-analytics/get-project"
+    "getProject" : "index.php?r=medinfi-analytics/get-project-test"
 }
 
 $(document).ready(function () {
@@ -67,7 +67,7 @@ function setAcm(acm) {
 function getFilterData(apiUrl) {
     $.get(apiUrl, function(data, status){
         //console.log("data" + data + "status : " + status)
-        data = JSON.parse(data)
+        //data = JSON.parse(data)
         setCompanies(data.company)
         setClients(data.client)
         setAcm(data.acm)
@@ -107,9 +107,9 @@ function getProjectAndDashboard() {
 function getProjectList(apiUrl) {
     //set project list
      $.get(apiUrl, function(data, status){
-        //console.log("data : " + data);
-        json = JSON.parse(data)
-        setProjectList(json.projectList)
+        console.log(data);
+        //json = JSON.parse(data)
+        setProjectList(data.projectList)
     })
 }
 

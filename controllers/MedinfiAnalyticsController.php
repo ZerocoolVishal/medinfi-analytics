@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\services\MedinfiAnalyticsServiceImpl;
+use app\models\Users;
+
 class MedinfiAnalyticsController extends \yii\web\Controller
 {
     public function actionIndex()
@@ -33,8 +36,8 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         return $this->render('client/index.html');
     }
 
-    //Project List
-    public function actionGetProjectList()
+    //Project List Testing
+    public function actionGetProjectListTest()
     {
         $jsonResponse = '
         {
@@ -61,8 +64,17 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         echo $jsonResponse;
     }
 
+    //Project List
+    public function actionGetProjectList()
+    {
+        $resp = MedinfiAnalyticsServiceImpl::getProjectList();
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        echo json_encode($resp);
+    }
+
     //get Filter Data
-    public function actionGetFilterData() 
+    public function actionGetFilterDataTest() 
     {
         $jsonResponse = '{
             "company": [{
@@ -105,8 +117,15 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         echo $jsonResponse;
     }
 
+    public function actionGetFilterData() {
+        $projectId = 10;
+        $res = MedinfiAnalyticsServiceImpl::getFilterData($projectId);
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        echo json_encode($res);
+    }
+
     //Project dashboard
-    public function actionGetProject() {
+    public function actionGetProjectTest() {
         
         $jsonResponse = '
         {
@@ -147,7 +166,20 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         echo $jsonResponse;
     }
 
+    public function actionGetProject() {
+        $q = \Yii::$app->request->get('project_id') | 1;
+        $projectId = $q;
+        $project = MedinfiAnalyticsServiceImpl::getProject($projectId);
+        //\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        print_r($project);
+    }
+
     public function actionDatabase() {
-        echo "Database";
+        MedinfiAnalyticsServiceImpl::getTest();
+    }
+
+    public function actionTest($id) {
+        var_dump($id);
+        //echo "Test : ".$id;
     }
 }
