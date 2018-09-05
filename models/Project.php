@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property int $company
+ * @property int $client
  * @property int $tw_retweets_target
  * @property int $tw_impression_target
  * @property int $tw_comments_target
@@ -25,6 +26,8 @@ use Yii;
  *
  * @property Blog[] $blogs
  * @property Users $accountManager0
+ * @property Company $company0
+ * @property Client $client0
  * @property Projectweek[] $projectweeks
  */
 class Project extends \yii\db\ActiveRecord
@@ -43,11 +46,13 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'company', 'tw_retweets_target', 'tw_impression_target', 'tw_comments_target', 'fb_likes_share_target', 'fb_click_target', 'fb_comments_target', 'blog_pageview_target', 'blog_bannerclicks_target', 'blog_online_sale_target', 'duration', 'accountManager', 'launchDate'], 'required'],
-            [['company', 'tw_retweets_target', 'tw_impression_target', 'tw_comments_target', 'fb_likes_share_target', 'fb_click_target', 'fb_comments_target', 'blog_pageview_target', 'blog_bannerclicks_target', 'blog_online_sale_target', 'duration', 'accountManager'], 'integer'],
+            [['name', 'company', 'client', 'tw_retweets_target', 'tw_impression_target', 'tw_comments_target', 'fb_likes_share_target', 'fb_click_target', 'fb_comments_target', 'blog_pageview_target', 'blog_bannerclicks_target', 'blog_online_sale_target', 'duration', 'accountManager', 'launchDate'], 'required'],
+            [['company', 'client', 'tw_retweets_target', 'tw_impression_target', 'tw_comments_target', 'fb_likes_share_target', 'fb_click_target', 'fb_comments_target', 'blog_pageview_target', 'blog_bannerclicks_target', 'blog_online_sale_target', 'duration', 'accountManager'], 'integer'],
             [['launchDate'], 'safe'],
             [['name'], 'string', 'max' => 100],
             [['accountManager'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['accountManager' => 'id']],
+            [['company'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company' => 'id']],
+            [['client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['client' => 'id']],
         ];
     }
 
@@ -60,6 +65,7 @@ class Project extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'company' => 'Company',
+            'client' => 'Client',
             'tw_retweets_target' => 'Tw Retweets Target',
             'tw_impression_target' => 'Tw Impression Target',
             'tw_comments_target' => 'Tw Comments Target',
@@ -89,6 +95,22 @@ class Project extends \yii\db\ActiveRecord
     public function getAccountManager0()
     {
         return $this->hasOne(Users::className(), ['id' => 'accountManager']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompany0()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClient0()
+    {
+        return $this->hasOne(Client::className(), ['id' => 'client']);
     }
 
     /**

@@ -1,7 +1,7 @@
 const api = {
     "getFlterData" : "index.php?r=medinfi-analytics/get-filter-data",
     "getProjectList" : "index.php?r=medinfi-analytics/get-project-list",
-    "getProject" : "index.php?r=medinfi-analytics/get-project-test"
+    "getProject" : "index.php?r=medinfi-analytics/get-project"
 }
 
 $(document).ready(function () {
@@ -129,11 +129,10 @@ function selectProject(projectID) {
 
     //AJAX call and get project bt id
     $.get(api['getProject'],{
-        id: projectID
+        project_id: projectID
     },function(data, status){
-        console.log("data : " + data + "status : " + status)
-        let json = JSON.parse(data)
-        setProjectDashboard(json)
+        //console.log(data)
+        setProjectDashboard(data)
     })
 }
 

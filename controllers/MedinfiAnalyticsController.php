@@ -167,19 +167,23 @@ class MedinfiAnalyticsController extends \yii\web\Controller
     }
 
     public function actionGetProject() {
-        $q = \Yii::$app->request->get('project_id') | 1;
-        $projectId = $q;
-        $project = MedinfiAnalyticsServiceImpl::getProject($projectId);
-        //\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        print_r($project);
+        $q = \Yii::$app->request->get('project_id');
+        if(isset($q)) {
+            $projectId = $q;
+            $project = MedinfiAnalyticsServiceImpl::getProject($projectId);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            echo json_encode($project);
+        } else {
+            echo "project_id is missing";
+        }
     }
 
     public function actionDatabase() {
         MedinfiAnalyticsServiceImpl::getTest();
     }
 
-    public function actionTest($id) {
-        var_dump($id);
-        //echo "Test : ".$id;
+    public function actionTest() {
+        $id = \Yii::$app->getRequest()->getQueryParam('id');
+        echo "Test : ".$id;
     }
 }

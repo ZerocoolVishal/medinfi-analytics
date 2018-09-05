@@ -15,7 +15,10 @@ use Yii;
  * @property int $lastUpdateBy
  * @property string $lastUpdateTime
  *
+ * @property Client[] $clients
  * @property Project[] $projects
+ * @property Users $lastUpdateBy0
+ * @property Users[] $users
  */
 class Users extends \yii\db\ActiveRecord
 {
@@ -39,6 +42,7 @@ class Users extends \yii\db\ActiveRecord
             [['lastUpdateTime'], 'safe'],
             [['email', 'name', 'password'], 'string', 'max' => 100],
             [['email'], 'unique'],
+            [['lastUpdateBy'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['lastUpdateBy' => 'id']],
         ];
     }
 
@@ -61,9 +65,33 @@ class Users extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getClients()
+    {
+        return $this->hasMany(Client::className(), ['userId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getProjects()
     {
         return $this->hasMany(Project::className(), ['accountManager' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLastUpdateBy0()
+    {
+        return $this->hasOne(Users::className(), ['id' => 'lastUpdateBy']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(Users::className(), ['lastUpdateBy' => 'id']);
     }
 
     /**
