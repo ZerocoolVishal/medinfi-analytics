@@ -5,6 +5,7 @@ namespace app\dao;
 use app\models\Users;
 use app\models\Project;
 use app\models\Company;
+use app\models\Client;
 
 class MedinfiAnalyticsDao {
 
@@ -13,27 +14,22 @@ class MedinfiAnalyticsDao {
 
         $users = Users::find()->all();
         $companyList = Company::find()->all();
+        $clientList = Client::find()->all();
 
         $res = new \stdClass();
         $res->company = array();
         $res->client = array();
         $res->acm = array();
 
-        foreach ($companyList as $comp) {
+        foreach($companyList as $comp) {
             $company = new \stdClass();
             $company->id = $comp->id;
             $company->name = $comp->name;
             $res->company[] = $company;
         }
 
-        foreach ($users as $user) {
-            if($user->userType == "client") {
-                $client = new \stdClass();
-                $client->id = $user->id;
-                $client->name = $user->name;
-                $res->client[] = $client;
-            } 
-
+        foreach($users as $user) {
+        
             if($user->userType == "acm") {
                 $acm = new \stdClass();
                 $acm->id = $user->id;
@@ -42,13 +38,18 @@ class MedinfiAnalyticsDao {
             }
         }
 
+        foreach($clientList as $client) {
+            $cli = new \stdClass();
+            $cli->id = $client->id;
+            $cli->name = $client->user->name;
+            $res->client[] = $cli;
+        }
+
         return $res;
     }
 
-    public static function getProjectList() {
+    static function projectListResp($projectList) {
 
-        $projectList = Project::find()->all();
-        
         $resp = new \stdClass();
         $resp->projectList = array();
         foreach ($projectList as $project) {
@@ -59,6 +60,36 @@ class MedinfiAnalyticsDao {
         }
 
         return $resp;
+    }
+
+    public static function getProjectList(array $id = null) {
+
+        if(isset($id['clientId'])) {
+            $id = $id['clientId'];
+            $projectList = Client::find()->where(['id'=>$id])->one()->projects;
+            //print_r($projectList);
+            return self::projectListResp($projectList);
+        }
+
+        else if(isset($id['companyId'])) {
+            $id = $id['companyId'];
+            $projectList = Company::find()->where(['id'=>$id])->one()->projects;
+            //print_r($projectList);
+            return self::projectListResp($projectList);
+        }
+
+        else if(isset($id['acmId'])) {
+            $id = $id['acmId'];
+            $projectList = Users::find()->where(['id'=>$id])->one()->projects;
+            //print_r($projectList);
+            return self::projectListResp($projectList);
+        }
+
+        else {
+            $projectList = Project::find()->all();
+            $resp = self::projectListResp($projectList);
+            return $resp;
+        }
     }
 
     public static function getProject(int $porjectId) {
@@ -97,25 +128,16 @@ class MedinfiAnalyticsDao {
             $p->twitter->impression = array();
             $p->twitter->retweets = array();
             $p->twitter->comments = array();
-
-            //Twitter
-            /*$p->tw_retweets_target = $project[0]->tw_retweets_target;
-            $p->tw_impression_target = $project[0]->tw_impression_target;
-            $p->tw_comments_target = $project[0]->tw_comments_target;*/
-
-            //Facebook
-            /*$p->fb_likes_share_target = $project[0]->fb_likes_share_target;
-            $p->fb_click_target = $project[0]->fb_click_target;
-            $p->fb_comments_target = $project[0]->fb_comments_target;*/
-
-            //Medinfi blog
-            /*$p->blog_pageview_target = $project[0]->blog_pageview_target;
-            $p->blog_bannerclicks_target = $project[0]->blog_bannerclicks_target;
-            $p->blog_online_sale_target = $project[0]->blog_online_sale_target;*/
-
+            
             return $p;
         } else {
             echo "No project found";
         }
+    }
+
+    public static function test() {
+        $client = Client::find()->where(['id'=>1])->one();
+        print_r($client->projects);
+        //echo json_encode($client->company);
     }
 }

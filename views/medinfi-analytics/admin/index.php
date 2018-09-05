@@ -4,15 +4,21 @@
         <div class="row">
             <div class="col lg-3">
                 <label class="col-form-label">Company</label>
-                <select class="custom-select" id="company_select"></select>
+                <select class="custom-select" id="company_select">
+                    <option selected disabled>Select a company</option>
+                </select>
             </div>
             <div class="col lg-3">
                 <label class="col-form-label">Client</label>
-                <select class="custom-select" style="margin-left:10px;" id="client_select"></select>
+                <select class="custom-select" style="margin-left:10px;" id="client_select">
+                    <option selected disabled>Select a client</option>
+                </select>
             </div>
             <div class="col lg-3">
                 <label class="col-form-label">Account Manager</label>
-                <select class="custom-select" style="margin-left:10px;" id="acm_select"></select>
+                <select class="custom-select" style="margin-left:10px;" id="acm_select">
+                    <option selected disabled>Select an account manager</option>
+                </select>
             </div>
         </div>
 

@@ -22,6 +22,7 @@ $(document).ready(function () {
         selectClient(this.value)
     })
     $("#acm_select").change(function(){
+        console.log("select");
         selectAcm(this.value)
     })
     
@@ -80,7 +81,15 @@ function getFilterData(apiUrl) {
     This will display all the clients assoiate with that company
 */
 function selectCompany(companyId) {
-    alert("company is selected " + companyId)
+    //alert("slient is selected " + companyId)
+    $.get(api['getProjectList'], 
+    {
+        company: companyId
+    }, 
+    function(data, dtatus){
+        console.log(data);
+        setProjectList(data.projectList)
+    })
 }
 
 /*
@@ -88,7 +97,15 @@ function selectCompany(companyId) {
     TODO: select client implementation
 */
 function selectClient(clientId) {
-    alert("slient is selected " + clientId)
+    //alert("slient is selected " + clientId)
+    $.get(api['getProjectList'], 
+    {
+        client: clientId
+    }, 
+    function(data, dtatus){
+        console.log(data);
+        setProjectList(data.projectList)
+    })
 }
 
 /*
@@ -96,7 +113,15 @@ function selectClient(clientId) {
     TODO: select client implementation
 */
 function selectAcm(acmId) {
-    alert("ACM is selected " + acmId)
+    //alert("slient is selected " + acmId)
+    $.get(api['getProjectList'], 
+    {
+        acm: acmId
+    }, 
+    function(data, dtatus){
+        console.log(data);
+        setProjectList(data.projectList)
+    })
 }
 
 //AJAX Method for getting project and dashboard
@@ -117,6 +142,7 @@ function getProjectList(apiUrl) {
     projectList is the list of projects
 */
 function setProjectList(projectList) {
+    $("#project_list").html("");
     projectList.forEach(project => {
         $("#project_list").append(`<a href="#" class="list-group-item list-group-item-action" id="project_list_${project.id}" onclick="selectProject('${project.id}')">${project.name}</a>`)
     })
@@ -153,7 +179,10 @@ function setProjectDashboard(project) {
     setProjectTargets(projectTotal, projectTarget)
 
     //Table
-    loadTable("page-views-table", project.medinfi.data.pageViews.weekData)
+    //Medinfi Tables
+    loadTable("page-views-table", project.medinfi.pageViews, project.duration)
+    loadTable("banner-clicks-table", project.medinfi.bannerClicks, project.duration)
+    loadTable("online-sales-table", project.medinfi.onlineSales, project.duration)
 }
 
 //set project level target
@@ -212,7 +241,9 @@ function filterTable(tableID, inputID) {
 }
 
 //for loading data in the table
-function loadTable(tableId, weekData) {
+function loadTable(tableId, weekData, duration = 0) {
+
+    console.log(weekData);
 
     //Creating Table Head
     let tableHead = $(`#${tableId} thead`)
@@ -224,7 +255,8 @@ function loadTable(tableId, weekData) {
     tableHead.children().append('<th colspan="1">Launch Date</th>')
     tableHead.children().append('<th class="table-active">Target</th>')
     tableHead.children().append('<th class="table-active">Actual</th>')
-    let weekDuration = weekData[0].data.length
+    //week duration
+    let weekDuration = duration
     for(let i=0; i<weekDuration; i++){
         tableHead.children().append(`<th>W${i}</th>`)
     }

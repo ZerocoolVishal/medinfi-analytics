@@ -64,15 +64,6 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         echo $jsonResponse;
     }
 
-    //Project List
-    public function actionGetProjectList()
-    {
-        $resp = MedinfiAnalyticsServiceImpl::getProjectList();
-
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        echo json_encode($resp);
-    }
-
     //get Filter Data
     public function actionGetFilterDataTest() 
     {
@@ -178,8 +169,35 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         }
     }
 
+    public function actionGetProjectList() {
+        $company = \Yii::$app->getRequest()->getQueryParam('company');
+        $client = \Yii::$app->getRequest()->getQueryParam('client');
+        $acm = \Yii::$app->getRequest()->getQueryParam('acm');
+        if(isset($company)) {
+            $projectList = MedinfiAnalyticsServiceImpl::getProjectList(['companyId'=>$company]);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            echo json_encode($projectList);
+        }
+        else if(isset($client)) {
+            $projectList = MedinfiAnalyticsServiceImpl::getProjectList(['clientId'=>$client]);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            echo json_encode($projectList);
+        }
+        else if(isset($acm)) {
+            $projectList = MedinfiAnalyticsServiceImpl::getProjectList(['acmId'=>$acm]);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            echo json_encode($projectList);
+        }
+        else {
+            $projectList = MedinfiAnalyticsServiceImpl::getProjectList();
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            echo json_encode($projectList);
+        }
+    }
+
     public function actionDatabase() {
-        MedinfiAnalyticsServiceImpl::getTest();
+        //MedinfiAnalyticsServiceImpl::getTestDatabase();
+        MedinfiAnalyticsServiceImpl::getProjectListOf(['acmId'=>1]);
     }
 
     public function actionTest() {
