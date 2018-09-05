@@ -10,11 +10,10 @@ use Yii;
  * @property int $id
  * @property int $userId
  * @property int $companyId
- * @property string $projects
  *
  * @property Company $company
  * @property Users $user
- * @property Project[] $projects0
+ * @property Project[] $projects
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -32,9 +31,8 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userId', 'companyId', 'projects'], 'required'],
+            [['userId', 'companyId'], 'required'],
             [['userId', 'companyId'], 'integer'],
-            [['projects'], 'string', 'max' => 100],
             [['companyId'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['companyId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
@@ -49,7 +47,6 @@ class Client extends \yii\db\ActiveRecord
             'id' => 'ID',
             'userId' => 'User ID',
             'companyId' => 'Company ID',
-            'projects' => 'Projects',
         ];
     }
 
@@ -72,7 +69,7 @@ class Client extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjects0()
+    public function getProjects()
     {
         return $this->hasMany(Project::className(), ['client' => 'id']);
     }
