@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property int $userId
  * @property int $companyId
+ * @property string $brandName
  *
  * @property Company $company
  * @property Users $user
@@ -31,8 +32,9 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userId', 'companyId'], 'required'],
+            [['userId', 'companyId', 'brandName'], 'required'],
             [['userId', 'companyId'], 'integer'],
+            [['brandName'], 'string', 'max' => 100],
             [['companyId'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['companyId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
@@ -47,6 +49,7 @@ class Client extends \yii\db\ActiveRecord
             'id' => 'ID',
             'userId' => 'User ID',
             'companyId' => 'Company ID',
+            'brandName' => 'Brand Name',
         ];
     }
 

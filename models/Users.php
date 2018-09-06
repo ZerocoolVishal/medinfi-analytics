@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $email
  * @property string $name
+ * @property string $mobile
  * @property string $password
  * @property string $userType
  * @property int $lastUpdateBy
@@ -36,11 +37,12 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'name', 'password', 'userType', 'lastUpdateBy'], 'required'],
+            [['email', 'name', 'mobile', 'password', 'userType', 'lastUpdateBy'], 'required'],
             [['userType'], 'string'],
             [['lastUpdateBy'], 'integer'],
             [['lastUpdateTime'], 'safe'],
             [['email', 'name', 'password'], 'string', 'max' => 100],
+            [['mobile'], 'string', 'max' => 15],
             [['email'], 'unique'],
             [['lastUpdateBy'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['lastUpdateBy' => 'id']],
         ];
@@ -55,6 +57,7 @@ class Users extends \yii\db\ActiveRecord
             'id' => 'ID',
             'email' => 'Email',
             'name' => 'Name',
+            'mobile' => 'Mobile',
             'password' => 'Password',
             'userType' => 'User Type',
             'lastUpdateBy' => 'Last Update By',
