@@ -135,6 +135,17 @@ class MedinfiAnalyticsDao {
         }
     }
 
+    public static function addCompany(array $data) {
+        //var_dump($data);
+        $company = new Company();
+        $company->name = $data['companyName'];
+        $company->contactPerson = $data['contactPerson'];
+        $company->email = $data['email'];
+        $company->mobile = $data['mobile'];
+        $res = $company->save();
+        echo $res;
+    }
+
     public static function test() {
         $client = Client::find()->where(['id'=>1])->one();
         print_r($client->projects);

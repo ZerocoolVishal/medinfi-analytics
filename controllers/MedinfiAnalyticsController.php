@@ -204,4 +204,25 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         $id = \Yii::$app->getRequest()->getQueryParam('id');
         echo "Test : ".$id;
     }
+
+    //http://localhost/medinfi-analytics/web/?r=medinfi-analytics/add-company&companyName=Demo&contactPerson=vishal&email=demo@demo&mobile=1234567890
+    public function actionAddCompany() {
+
+        $companyName = \Yii::$app->getRequest()->getQueryParam('companyName');
+        $contactPerson = \Yii::$app->getRequest()->getQueryParam('contactPerson');
+        $email = \Yii::$app->getRequest()->getQueryParam('email'); 
+        $mobile = \Yii::$app->getRequest()->getQueryParam('mobile');
+
+        if(isset($companyName) && isset($contactPerson) && isset($email) && isset($mobile)) {
+            
+            $company['companyName'] = $companyName;
+            $company['contactPerson'] = $contactPerson;
+            $company['email'] = $email;
+            $company['mobile'] = $mobile;
+            MedinfiAnalyticsServiceImpl::addCompany($company);
+            
+        } else {
+            echo "Paramater are missing";
+        }
+    }
 }

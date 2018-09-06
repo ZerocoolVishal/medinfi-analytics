@@ -26,4 +26,8 @@ class MedinfiAnalyticsServiceImpl {
         $projectList = MedinfiAnalyticsDao::getProjectList($id);
         return $projectList;
     }
+
+    public static function addCompany(array $data) {
+        MedinfiAnalyticsDao::addCompany($data);
+    }
 }

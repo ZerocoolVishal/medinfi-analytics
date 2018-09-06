@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytics 2.0</title>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/css/Navigation-with-Search.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-</head>
-
-<body>
     <div class="container">
         <div class="row" style="margin-top:20px;">
             <div class="col">
@@ -194,24 +180,7 @@
                                                         <div class="modal-header">
                                                             <h4 class="modal-title">Preview</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                                                         <div class="modal-body">
-                                                            <h3>Project</h3>
-                                                            <p>Client Name : Client 1</p>
-                                                            <p>Project Name : XYZ Project</p>
-                                                            <p>Duration : 10 Weeks</p>
-                                                            <p>Launch Date : 28 - 06 - 2018</p>
-                                                            <p>Account Manager : Account Manager Name</p>
-                                                            <h3>Medinfi Blog</h3>
-                                                            <p>Page view Target : 10000</p>
-                                                            <p>Banner Clicks Target : 10000</p>
-                                                            <p>Online Sales Target : 10000</p>
-                                                            <h3>Facebook</h3>
-                                                            <p>Likes &amp; Shares Target : 10000</p>
-                                                            <p>Click To Site Target : 10000</p>
-                                                            <p>Comments Target : 10000</p>
-                                                            <h3>Twitter</h3>
-                                                            <p>Impression Target : 10000</p>
-                                                            <p>Retweets Target : 10000</p>
-                                                            <p>Comments Target : 10000</p>
+                                                            
                                                         </div>
                                                         <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
                                                     </div>
@@ -228,8 +197,3 @@
     </div>
     </div>
     </div>
-    <script src="../assets/js/jquery.min.js"></script>
-    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
-
-</html>

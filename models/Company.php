@@ -9,6 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property string $contactPerson
+ * @property string $email
+ * @property string $mobile
  *
  * @property Client[] $clients
  * @property Project[] $projects
@@ -29,8 +32,10 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 100],
+            [['name', 'contactPerson', 'email', 'mobile'], 'required'],
+            [['name', 'contactPerson'], 'string', 'max' => 100],
+            [['email'], 'string', 'max' => 200],
+            [['mobile'], 'string', 'max' => 15],
         ];
     }
 
@@ -42,6 +47,9 @@ class Company extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'contactPerson' => 'Contact Person',
+            'email' => 'Email',
+            'mobile' => 'Mobile',
         ];
     }
 
