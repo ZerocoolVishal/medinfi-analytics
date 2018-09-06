@@ -37,7 +37,7 @@ class MedinfiAnalyticsController extends \yii\web\Controller
     }
 
     //Project List Testing
-    public function actionGetProjectListTest()
+    /*public function actionGetProjectListTest()
     {
         $jsonResponse = '
         {
@@ -62,10 +62,10 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         }';
         
         echo $jsonResponse;
-    }
+    }*/
 
     //get Filter Data
-    public function actionGetFilterDataTest() 
+    /*public function actionGetFilterDataTest() 
     {
         $jsonResponse = '{
             "company": [{
@@ -106,55 +106,13 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         }';
         
         echo $jsonResponse;
-    }
+    }*/
 
     public function actionGetFilterData() {
         $projectId = 10;
         $res = MedinfiAnalyticsServiceImpl::getFilterData($projectId);
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         echo json_encode($res);
-    }
-
-    //Project dashboard
-    public function actionGetProjectTest() {
-        
-        $jsonResponse = '
-        {
-            "id" : 1,
-            "name" : "name of the project",
-            "launchDate" : "24-10-2018",
-            "duration" : 3,
-            "medinfi" : {
-                "name" : "name of the blog",
-                "launchDate" : "24-10-2018",
-                "total" : 500,
-                "target" : 600,
-                "pageViews" : [
-                    {
-                        "achieved" : 200,
-                        "target" : 500,
-                        "weekData" : [
-                            10,
-                            20,
-                            30
-                        ]
-                    }
-                ]
-            },  
-            "facebook" : {
-                "name" : "name of the post",
-                "launchDate" : "24-10-2018",
-                "total" : 200,
-                "target" : 600
-            },
-            "twitter" : {
-                "name" : "name of the post",
-                "launchDate" : "24-10-2018",
-                "total" : 300,
-                "target" : 600
-            }
-        }';
-        echo $jsonResponse;
     }
 
     public function actionGetProject() {
@@ -219,10 +177,40 @@ class MedinfiAnalyticsController extends \yii\web\Controller
             $company['contactPerson'] = $contactPerson;
             $company['email'] = $email;
             $company['mobile'] = $mobile;
-            MedinfiAnalyticsServiceImpl::addCompany($company);
+            $res = MedinfiAnalyticsServiceImpl::addCompany($company);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            echo $res;
             
         } else {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             echo "Paramater are missing";
         }
+    }
+
+    public function actionAddAcm() {
+        $name = \Yii::$app->getRequest()->getQueryParam('name');
+        $email = \Yii::$app->getRequest()->getQueryParam('email'); 
+        $mobile = \Yii::$app->getRequest()->getQueryParam('mobile');
+        $password = \Yii::$app->getRequest()->getQueryParam('password');
+
+        if(isset($name) && isset($password) && isset($email) && isset($mobile)) {
+            
+            $acm['name'] = $name;
+            $acm['email'] = $email;
+            $acm['mobile'] = $mobile;
+            $acm['password'] = $password;
+            $res = MedinfiAnalyticsServiceImpl::addAcm($acm);
+            echo $res;
+            
+        } else {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            echo "Paramater are missing";
+        }
+    }
+
+    public function actionGetCompanies() {
+        $res = MedinfiAnalyticsServiceImpl::getCompanies();
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        echo json_encode($res);
     }
 }

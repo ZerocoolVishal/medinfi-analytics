@@ -1,4 +1,5 @@
     <div class="container">
+        <div id="display_message"></div>
         <div class="row" style="margin-top:20px;">
             <div class="col">
                 <div class="modal fade" role="dialog" tabindex="-1" id="client">
@@ -11,33 +12,33 @@
                                     <div class="col">
                                         <form>
                                             <div class="form-row" style="margin-bottom:20px;">
-                                                <div class="col"><label class="col-form-label">Client Name</label><input class="form-control" type="text"></div>
-                                                <div class="col"><label class="col-form-label">Brand Name</label><input class="form-control" type="text"></div>
+                                                <div class="col"><label class="col-form-label">Client Name</label><input class="form-control" id="client-name" type="text"></div>
+                                                <div class="col"><label class="col-form-label">Brand Name</label><input class="form-control" id="client-brand-name" type="text"></div>
                                             </div>
                                             <div class="form-row">
-                                                <div class="col-lg-6 offset-lg-0"><label class="col-form-label">Company</label><select class="form-control"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></select></div>
+                                                <div class="col-lg-6 offset-lg-0"><label class="col-form-label">Company</label><select class="form-control" id="company-select"><option value="" disabled selected>Select a company</option></select></div>
                                                 <div
                                                     class="col"><label class="col-form-label">Client ID</label><div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Client ID" aria-label="Client ID" aria-describedby="basic-addon2">
+  <input type="text" id="client-id" class="form-control" placeholder="Client ID" aria-label="Client ID" aria-describedby="basic-addon2">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button">Check</button>
   </div>
 </div></div>
                                     </div>
                                     <div class="form-row" style="margin-bottom:20px;">
-                                        <div class="col"><label class="col-form-label">Email</label><input class="form-control" type="text" inputmode="email"></div>
-                                        <div class="col"><label class="col-form-label">Mobile</label><input class="form-control" type="text" maxlength="10" minlength="10" inputmode="numeric"></div>
+                                        <div class="col"><label class="col-form-label">Email</label><input class="form-control" id="client-email" type="text" inputmode="email"></div>
+                                        <div class="col"><label class="col-form-label">Mobile</label><input class="form-control" id="client-mobile" type="text" maxlength="10" minlength="10" inputmode="numeric"></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-6"><label class="col-form-label">Password</label><div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2">
+  <input type="text" class="form-control" id="client-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button">Check</button>
   </div>
 </div></div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col"><button class="btn btn-primary" type="button">Add</button></div>
+                                        <div class="col"><button class="btn btn-primary" id="add-client-btn" type="button">Add</button></div>
                                     </div>
                                     </form>
                                 </div>
@@ -57,15 +58,15 @@
                                 <div class="col">
                                     <form>
                                         <div class="form-row">
-                                            <div class="col"><label class="col-form-label">Company Name</label><input class="form-control" type="text"></div>
-                                            <div class="col"><label class="col-form-label">Contact Person</label><input class="form-control" type="text"></div>
+                                            <div class="col"><label class="col-form-label">Company Name</label><input  id="company-name" class="form-control" type="text"></div>
+                                            <div class="col"><label class="col-form-label">Contact Person</label><input  id="company-contact-person" class="form-control" type="text"></div>
                                         </div>
                                         <div class="form-row" style="margin-bottom:20px;">
-                                            <div class="col"><label class="col-form-label">Email</label><input class="form-control" type="text" inputmode="email"></div>
-                                            <div class="col"><label class="col-form-label">Mobile</label><input class="form-control" type="text" maxlength="10" minlength="10" inputmode="numeric"></div>
+                                            <div class="col"><label class="col-form-label">Email</label><input class="form-control"  id="company-email" type="email" inputmode="email"></div>
+                                            <div class="col"><label class="col-form-label">Mobile</label><input class="form-control" id="company-mobile" type="text" maxlength="10" minlength="10" inputmode="numeric"></div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col"><button class="btn btn-primary" type="button">Add</button></div>
+                                            <div class="col"><button class="btn btn-primary" id="add-company-btn" type="button">Add</button></div>
                                         </div>
                                     </form>
                                 </div>
@@ -85,15 +86,15 @@
                                 <div class="col">
                                     <form>
                                         <div class="form-row">
-                                            <div class="col"><label class="col-form-label">Name</label><input class="form-control" type="text"></div>
-                                            <div class="col"><label class="col-form-label">Password</label><input class="form-control" type="text"></div>
+                                            <div class="col"><label class="col-form-label">Name</label><input class="form-control" id="acm-name" type="text"></div>
+                                            <div class="col"><label class="col-form-label">Password</label><input class="form-control" id="acm-password" type="text"></div>
                                         </div>
                                         <div class="form-row" style="margin-bottom:20px;">
-                                            <div class="col"><label class="col-form-label">Email</label><input class="form-control" type="email"></div>
-                                            <div class="col"><label class="col-form-label">Mobile</label><input class="form-control" type="text" maxlength="10" minlength="10" inputmode="numeric"></div>
+                                            <div class="col"><label class="col-form-label">Email</label><input class="form-control" id="acm-email" type="email"></div>
+                                            <div class="col"><label class="col-form-label">Mobile</label><input class="form-control" id="acm-mobile" type="text" maxlength="10" minlength="10" inputmode="numeric"></div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col"><button class="btn btn-primary" type="button">Add</button></div>
+                                            <div class="col"><button class="btn btn-primary" id="add-acm-btn" type="button">Add</button></div>
                                         </div>
                                     </form>
                                 </div>
@@ -157,15 +158,16 @@
                                 <div class="tab-pane" role="tabpanel" id="tab-8">
                                     <div class="form-row" style="margin-top:20px;">
                                         <div class="col"><label class="col-form-label">Client</label><div class="input-group">
-  <select class="custom-select" id="inputGroupSelect04">
-    <option selected>Choose...</option>
-    <option value="1">Client 1</option>
-    <option value="2">Client 2</option>
-    <option value="3">Client 3</option>
-  </select>
-</div></div>
+                                            <select class="custom-select" id="client-select">
+                                                <option selected disabled>Select a client...</option>
+                                            </select>
+                                        </div></div>
                                         <div class="col"><label class="col-form-label">Project Name</label><input class="form-control" type="text"></div>
-                                        <div class="col"><label class="col-form-label">Account Manager</label><select class="form-control"><optgroup label="This is a group"><option value="12" selected="">This is item 1</option><option value="13">This is item 2</option><option value="14">This is item 3</option></optgroup></select></div>
+                                        <div class="col"><label class="col-form-label">Account Manager</label>
+                                        <select class="form-control" id="acm-select">                                        
+                                            <option selected disabled>Select an account manager</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col"><label class="col-form-label">Duration (no. of weeks)</label><input class="form-control" type="number"></div>

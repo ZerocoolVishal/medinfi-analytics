@@ -48,6 +48,18 @@ class MedinfiAnalyticsDao {
         return $res;
     }
 
+    public static function getCompanies() {
+        $res = array();
+        $companyList = Company::find()->all();
+        foreach($companyList as $company) {
+            $com = new \stdClass();
+            $com->id = $company->id;
+            $com->name = $company->name;
+            $res[] = $com;
+        }
+        return $res;
+    }
+
     static function projectListResp($projectList) {
 
         $resp = new \stdClass();
@@ -143,7 +155,19 @@ class MedinfiAnalyticsDao {
         $company->email = $data['email'];
         $company->mobile = $data['mobile'];
         $res = $company->save();
-        echo $res;
+        return $res;
+    }
+
+    public static function addAcm(array $data) {
+        $users = new \app\models\Users();
+        $users->name = $data['name'];
+        $users->email = $data['email'];
+        $users->mobile = $data['mobile'];
+        $users->password = md5($data['password']);
+        $users->userType = "acm";
+        $users->lastUpdateBy = 1;
+        $res = $users->save();
+        return $res;
     }
 
     public static function test() {

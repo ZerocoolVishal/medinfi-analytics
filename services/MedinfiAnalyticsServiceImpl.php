@@ -28,6 +28,17 @@ class MedinfiAnalyticsServiceImpl {
     }
 
     public static function addCompany(array $data) {
-        MedinfiAnalyticsDao::addCompany($data);
+        $res = MedinfiAnalyticsDao::addCompany($data);
+        return $res;
+    }
+
+    public static function addAcm(array $data) {
+        $res = MedinfiAnalyticsDao::addAcm($data);
+        return $res;
+    }
+
+    public static function getCompanies() {
+        $res = MedinfiAnalyticsDao::getFilterData()->company;
+        return $res;
     }
 }

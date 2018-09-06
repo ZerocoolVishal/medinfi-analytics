@@ -1,4 +1,4 @@
-const api = {
+api = {
     "getFlterData" : "index.php?r=medinfi-analytics/get-filter-data",
     "getProjectList" : "index.php?r=medinfi-analytics/get-project-list",
     "getProject" : "index.php?r=medinfi-analytics/get-project"
