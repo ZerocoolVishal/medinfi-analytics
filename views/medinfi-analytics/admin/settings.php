@@ -127,9 +127,9 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" role="tabpanel" id="tab-5">
                                     <div class="form-row" style="margin-top:20px;">
-                                        <div class="col-4"><label class="col-form-label">Page View Target</label><input class="form-control" type="number"></div>
-                                        <div class="col-4"><label class="col-form-label">Banner Clicks Target</label><input class="form-control" type="number"></div>
-                                        <div class="col-4"><label class="col-form-label">Online Sales Target</label><input class="form-control" type="number"></div>
+                                        <div class="col-4"><label class="col-form-label">Page View Target</label><input class="form-control" id="blog_pageview_target" type="number"></div>
+                                        <div class="col-4"><label class="col-form-label">Banner Clicks Target</label><input class="form-control" id="blog_bannerclicks_target" type="number"></div>
+                                        <div class="col-4"><label class="col-form-label">Online Sales Target</label><input class="form-control" id="blog_online_sale_target" type="number"></div>
                                     </div>
                                     <div class="form-row" style="margin-top:20px;">
                                         <div class="col"><button class="btn btn-outline-primary btn-sm" type="button" data-toggle="pill" href="#tab-6" role="tab">Next</button></div>
@@ -137,9 +137,9 @@
                                 </div>
                                 <div class="tab-pane" role="tabpanel" id="tab-6">
                                     <div class="form-row" style="margin-top:20px;">
-                                        <div class="col"><label class="col-form-label">Likes &amp; Shares Target</label><input class="form-control" type="number"></div>
-                                        <div class="col"><label class="col-form-label">Clicks To Site Target</label><input class="form-control" type="number"></div>
-                                        <div class="col"><label class="col-form-label">Comments Target</label><input class="form-control" type="number"></div>
+                                        <div class="col"><label class="col-form-label">Likes &amp; Shares Target</label><input class="form-control" id="fb_likes_share_target" type="number"></div>
+                                        <div class="col"><label class="col-form-label">Clicks To Site Target</label><input class="form-control" id="fb_click_target" type="number"></div>
+                                        <div class="col"><label class="col-form-label">Comments Target</label><input class="form-control" id="fb_comments_target" type="number"></div>
                                     </div>
                                     <div class="form-row" style="margin-top:20px;">
                                         <div class="col"><button class="btn btn-outline-primary btn-sm" type="button" data-toggle="pill" href="#tab-6" role="tab">Next</button></div>
@@ -147,9 +147,9 @@
                                 </div>
                                 <div class="tab-pane" role="tabpanel" id="tab-7">
                                     <div class="form-row" style="margin-top:20px;">
-                                        <div class="col"><label class="col-form-label">Impression Target</label><input class="form-control" type="number"></div>
-                                        <div class="col"><label class="col-form-label">Retweets Target</label><input class="form-control" type="number"></div>
-                                        <div class="col"><label class="col-form-label">Comments Target</label><input class="form-control" type="number"></div>
+                                        <div class="col"><label class="col-form-label">Impression Target</label><input class="form-control" id="tw_impression_target" type="number"></div>
+                                        <div class="col"><label class="col-form-label">Retweets Target</label><input class="form-control" id="tw_retweets_target" type="number"></div>
+                                        <div class="col"><label class="col-form-label">Comments Target</label><input class="form-control" id="tw_comments_target" type="number"></div>
                                     </div>
                                     <div class="form-row" style="margin-top:20px;">
                                         <div class="col"><button class="btn btn-outline-primary btn-sm" type="button" data-toggle="pill" href="#tab-6" role="tab">Next</button></div>
@@ -162,7 +162,7 @@
                                                 <option selected disabled>Select a client...</option>
                                             </select>
                                         </div></div>
-                                        <div class="col"><label class="col-form-label">Project Name</label><input class="form-control" type="text"></div>
+                                        <div class="col"><label class="col-form-label">Project Name</label><input class="form-control" id="project_name" type="text"></div>
                                         <div class="col"><label class="col-form-label">Account Manager</label>
                                         <select class="form-control" id="acm-select">                                        
                                             <option selected disabled>Select an account manager</option>
@@ -170,18 +170,20 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col"><label class="col-form-label">Duration (no. of weeks)</label><input class="form-control" type="number"></div>
-                                        <div class="col"><label class="col-form-label">Launch date</label><input class="form-control" type="date"></div>
+                                        <div class="col"><label class="col-form-label">Duration (no. of weeks)</label><input class="form-control" id="duration" type="number"></div>
+                                        <div class="col"><label class="col-form-label">Launch date</label><input class="form-control" id="launchDate" type="date"></div>
                                     </div>
                                     <div class="form-row" style="margin-top:20px;margin-bottom:20px;">
-                                        <div class="col"><button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#project-prev" style="margin-right:3px;">Preview</button><button class="btn btn-primary" type="button" style="margin-left:20px;">Create</button>
+                                        <div class="col">
+                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#project-prev" style="margin-right:3px;">Preview</button>
+                                            <button class="btn btn-primary" id="add-project-btn" type="button" style="margin-left:20px;">Create</button>
                                             <div
                                                 class="modal fade" role="dialog" tabindex="-1" id="project-prev">
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h4 class="modal-title">Preview</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                                        <div class="modal-body">
+                                                        <div class="modal-body" id="project_preview">
                                                             
                                                         </div>
                                                         <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>

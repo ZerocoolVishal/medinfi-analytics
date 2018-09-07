@@ -159,7 +159,7 @@ class MedinfiAnalyticsDao {
     }
 
     public static function addAcm(array $data) {
-        $users = new \app\models\Users();
+        $users = new Users();
         $users->name = $data['name'];
         $users->email = $data['email'];
         $users->mobile = $data['mobile'];
@@ -168,6 +168,55 @@ class MedinfiAnalyticsDao {
         $users->lastUpdateBy = 1;
         $res = $users->save();
         return $res;
+    }
+
+    public static function addClient(array $data) {
+        
+        $clientUser = new Users();
+        $clientUser->name = $data['name'];
+        $clientUser->email = $data['email'];
+        $clientUser->mobile = $data['mobile'];
+        $clientUser->password = md5($data['password']);
+        $clientUser->userType = "client";
+        $clientUser->lastUpdateBy = 1;
+        $clientUser->save();
+      
+        $client = new Client();
+        $client->userId = $clientUser->id;
+        $client->companyId = $data['companyId'];
+        $client->brandName = $data['brandName'];
+
+        $res = $client->save();
+        return $res;
+    }
+
+    public static function addProject(array $data = null) {
+        //echo "Add project";
+        $project = new Project();
+        $project->name = $data['name'];
+        $project->company = Client::find()->where(['id'=>$data['client']])->one()->company->id;
+        $project->client = $data['client'];
+
+        $project->tw_retweets_target = $data['tw_retweets_target'];
+        $project->tw_impression_target = $data['tw_impression_target'];
+        $project->tw_comments_target = $data['tw_comments_target'];
+
+        $project->fb_likes_share_target = $data['fb_likes_share_target'];
+        $project->fb_click_target = $data['fb_click_target'];
+        $project->fb_comments_target = $data['fb_comments_target'];
+
+        $project->blog_pageview_target = $data['blog_pageview_target'];
+        $project->blog_bannerclicks_target = $data['blog_bannerclicks_target'];
+        $project->blog_online_sale_target = $data['blog_online_sale_target'];
+
+        $project->duration = $data['duration'];
+        $project->accountManager = $data['accountManager'];
+        $project->launchDate = $data['launchDate'];
+
+        $res = $project->save();
+        //$client = Client::find()->where(['id'=>2])->one()->company->id;
+        //echo $client;
+        echo $res;
     }
 
     public static function test() {

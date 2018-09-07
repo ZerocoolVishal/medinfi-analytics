@@ -41,4 +41,13 @@ class MedinfiAnalyticsServiceImpl {
         $res = MedinfiAnalyticsDao::getFilterData()->company;
         return $res;
     }
+
+    public static function addClient(array $data) {
+        $res = MedinfiAnalyticsDao::addClient($data);
+        return $res;
+    }
+
+    public static function addProject(array $data = null) {
+        MedinfiAnalyticsDao::addProject();
+    }
 }
