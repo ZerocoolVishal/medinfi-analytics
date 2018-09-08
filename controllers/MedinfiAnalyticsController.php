@@ -154,8 +154,8 @@ class MedinfiAnalyticsController extends \yii\web\Controller
     }
 
     public function actionDatabase() {
-        //MedinfiAnalyticsServiceImpl::getTestDatabase();
-        MedinfiAnalyticsServiceImpl::getProjectListOf(['acmId'=>1]);
+        //MedinfiAnalyticsServiceImpl::getProjectListOf(['acmId'=>1]);
+        echo MedinfiAnalyticsServiceImpl::getTestDatabase();
     }
 
     //http://localhost/medinfi-analytics/web/?r=medinfi-analytics/add-company&companyName=Demo&contactPerson=vishal&email=demo@demo&mobile=1234567890
@@ -228,28 +228,28 @@ class MedinfiAnalyticsController extends \yii\web\Controller
     public function actionAddProject() {
 
         $request = \Yii::$app->request->post();
-        if(isset($request)) {
-            print_r($request);
-        }
+        /*if(isset($request)) {
+            print_r($request['launchDate']);
+        }*/
 
-        /*$name = \Yii::$app->request->post('name');
-        $client = \Yii::$app->request->post('client');
+        /*$name = $request['name'];
+        $client = $request['client'];
         
-        $tw_retweets_target = \Yii::$app->request->post('tw_retweets_target');
-        $tw_impression_target = \Yii::$app->request->post('tw_impression_target');
-        $tw_comments_target = \Yii::$app->request->post('tw_comments_target');
+        $tw_retweets_target = $request['tw_retweets_target'];
+        $tw_impression_target = $request['tw_impression_target'];
+        $tw_comments_target = $request['tw_comments_target'];
 
-        $fb_likes_share_target = \Yii::$app->request->post('fb_likes_share_target');
-        $fb_click_target = \Yii::$app->request->post('fb_click_target');
-        $fb_comments_target = \Yii::$app->request->post('fb_comments_target');
+        $fb_likes_share_target = $request['fb_likes_share_target'];
+        $fb_click_target = $request['fb_click_target'];
+        $fb_comments_target = $request['fb_comments_target'];
 
-        $blog_pageview_target = \Yii::$app->request->post('blog_pageview_target');
-        $blog_bannerclicks_target = \Yii::$app->request->post('blog_bannerclicks_target');
-        $blog_online_sale_target = \Yii::$app->request->post('blog_online_sale_target');
+        $blog_pageview_target = $request['blog_pageview_target'];
+        $blog_bannerclicks_target = $request['blog_bannerclicks_target'];
+        $blog_online_sale_target = $request['blog_online_sale_target'];
 
-        $duration = \Yii::$app->request->post('duration');
-        $accountManager = \Yii::$app->request->post('accountManager');
-        $launchDate = \Yii::$app->request->post('launchDate');
+        $duration = $request['duration'];
+        $accountManager = $request['accountManager'];
+        $launchDate = $request['launchDate'];
 
         $data['name'] = $name;
         $data['client'] = $client;
@@ -264,15 +264,20 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         $data['blog_online_sale_target'] = $blog_online_sale_target;
         $data['duration'] = $duration;
         $data['accountManager'] = $accountManager;
-        $data['launchDate'] = $launchDate;
+        $data['launchDate'] = $launchDate;*/
 
-        MedinfiAnalyticsServiceImpl::addProject($data);*/
+        MedinfiAnalyticsServiceImpl::addProject($request);
     }
 
     public function actionGetCompanies() {
         $res = MedinfiAnalyticsServiceImpl::getCompanies();
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         echo json_encode($res);
+    }
+
+    public function actionAddBlogWeekMatric() {
+
+        MedinfiAnalyticsServiceImpl::addBlogWeekMatric();
     }
 
     public function actionTest() {

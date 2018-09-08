@@ -6,6 +6,7 @@ use app\models\Users;
 use app\models\Project;
 use app\models\Company;
 use app\models\Client;
+use app\models\Projectweek;
 
 class MedinfiAnalyticsDao {
 
@@ -119,7 +120,7 @@ class MedinfiAnalyticsDao {
 
             $p->medinfi = new \stdClass();
             //TODO
-            $p->medinfi->total = 1000;
+            $p->medinfi->total = 10;
             $p->medinfi->target = $project->blog_pageview_target + $project->blog_bannerclicks_target + $project->blog_online_sale_target;
             $p->medinfi->pageViews = array();
             $p->medinfi->bannerClicks = array();
@@ -127,7 +128,7 @@ class MedinfiAnalyticsDao {
 
             $p->facebook = new \stdClass();
             //TODO
-            $p->facebook->total = 1000;
+            $p->facebook->total = 10;
             $p->facebook->target = $project->fb_likes_share_target + $project->fb_click_target + $project->fb_comments_target;
             $p->facebook->likesAndShare = array();
             $p->facebook->clickToSite = array();
@@ -135,7 +136,7 @@ class MedinfiAnalyticsDao {
 
             $p->twitter = new \stdClass();
             //TODO
-            $p->twitter->total = 1000;
+            $p->twitter->total = 10;
             $p->twitter->target = $project->tw_retweets_target + $project->tw_impression_target + $project->tw_comments_target;
             $p->twitter->impression = array();
             $p->twitter->retweets = array();
@@ -190,7 +191,8 @@ class MedinfiAnalyticsDao {
         return $res;
     }
 
-    public static function addProject(array $data = null) {
+    public static function addProject(array $data) {
+        print_r($data);
         //echo "Add project";
         $project = new Project();
         $project->name = $data['name'];
@@ -214,9 +216,82 @@ class MedinfiAnalyticsDao {
         $project->launchDate = $data['launchDate'];
 
         $res = $project->save();
-        //$client = Client::find()->where(['id'=>2])->one()->company->id;
-        //echo $client;
-        echo $res;
+        echo $res." Project created";
+
+        //Adding Projectweek
+        self::addProjectweek($project->launchDate, $project->duration, $project->id);
+    }
+
+    static function addProjectweek($launchDate, $projectDuration, $project) {
+
+        $startDate = $launchDate;
+        $duration = $projectDuration;
+        $projectId = $project;
+
+        $start = strtotime($startDate);
+        $end = strtotime('+6 day', $start);
+
+        //Project Week creation
+        for($i = 0; $i < $duration; $i++) {
+            
+            $projectWeek = new Projectweek();
+            $projectWeek->project = $projectId;
+            $projectWeek->name = "w$i";
+            $projectWeek->startDate = date('Y-m-d', $start);
+            $projectWeek->endDate = date('Y-m-d', $end);
+            $res = $projectWeek->save();
+            print_r($res);
+
+            $start = strtotime('+7 days', $start);
+            $end = strtotime('+7 day', $end);
+        }
+    }
+
+    public static function getPorjectWeekMartric($porject, $launchDate) {
+
+        $projectId = $porject;
+        $launchDate = $launchDate;
+        $launchDate = strtotime($launchDate);
+
+        $projectWeeks = Projectweek::find()->where(['project'=>$projectId])->all();
+
+        foreach($projectWeeks as $projectWeek) {
+            
+            if($launchDate >= strtotime($projectWeek->startDate) 
+            && $launchDate <= strtotime($projectWeek->endDate)) {
+                return $projectWeek->id;
+            }
+        }
+        // /print_r($projectWeeks);
+    }
+
+    public static function addBlogWeekMatric(array $data = null) {
+        
+        $blogweekmatric = new Blogweekmatric();
+
+        //TODO
+        $blogweekmatric->blog = 1;
+
+        $blogweekmatric->projectWeek = self::getPorjectWeekMartric($data['projectId'], $data['launchDate']);
+
+        $blogweekmatric->tw_retweets = $data['tw_retweets'];
+        $blogweekmatric->tw_impression = $data['tw_impression'];
+        $blogweekmatric->tw_comments = $data['tw_comments'];
+
+        $blogweekmatric->fb_likes_share = $data['fb_likes_share'];
+        $blogweekmatric->fb_click = $data['fb_click'];
+        $blogweekmatric->fb_comments = $data['fb_comments'];
+
+        $blogweekmatric->blog_pageview = $data['blog_pageview'];
+        $blogweekmatric->blog_bannerclicks = $data['blog_bannerclicks'];
+        $blogweekmatric->blog_online_sale = $data['blog_online_sale'];   
+        
+        $blogweekmatric->save();
+    }
+
+    public static function addFacebookWeekmatric() {
+
+
     }
 
     public static function test() {
@@ -225,3 +300,5 @@ class MedinfiAnalyticsDao {
         //echo json_encode($client->company);
     }
 }
+
+//TODO: SELECT * FROM `projectweek` WHERE ('2018-09-20' BETWEEN `startDate` AND `endDate`) AND (`project` = 11)

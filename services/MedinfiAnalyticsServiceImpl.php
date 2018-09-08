@@ -7,7 +7,7 @@ use app\dao\MedinfiAnalyticsDao;
 class MedinfiAnalyticsServiceImpl {
 
     public static function getTestDatabase() {
-        MedinfiAnalyticsDao::test();
+        return MedinfiAnalyticsDao::getPorjectWeekMartric(11, "24-09-2018");
     }
 
     //Returns list of all companies account managers and clients
@@ -47,7 +47,11 @@ class MedinfiAnalyticsServiceImpl {
         return $res;
     }
 
-    public static function addProject(array $data = null) {
-        MedinfiAnalyticsDao::addProject();
+    public static function addProject(array $data) {
+        MedinfiAnalyticsDao::addProject($data);
+    }
+
+    public static function addBlogWeekMatric(array $data = null) {
+        MedinfiAnalyticsDao::addBlogWeekMatric($data);
     }
 }

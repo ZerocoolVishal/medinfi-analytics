@@ -23,6 +23,10 @@ $('document').ready(function(){
         addProject()
     })
 
+    $('#project-preview-btn').click(function(){
+        projectPreview();
+    })
+
     setCompanyList()
     setClientList()
     setAcmlist()
@@ -122,15 +126,14 @@ function addProject() {
     let fb_likes_share_target = $('#fb_likes_share_target').val()
     let fb_click_target = $('#fb_click_target').val()
     let fb_comments_target = $('#fb_comments_target').val()
-    let blog_pageview_target = $('#blog#_pageview_target').val()
-    let blog_bannerclicks_target = $('blog_bannerclicks_target').val()
+    let blog_pageview_target = $('#blog_pageview_target').val()
+    let blog_bannerclicks_target = $('#blog_bannerclicks_target').val()
     let blog_online_sale_target = $('#blog_online_sale_target').val()
     let duration = $('#duration').val()
     let accountManager = $('#acm-select').val()
     let launchDate = $('#launchDate').val()
 
     $.post(api.addProject, {
-
         name : name,
         client : client,
         tw_retweets_target : tw_retweets_target,
@@ -147,10 +150,49 @@ function addProject() {
         launchDate : launchDate
 
     }, function(data, status){
-        
         alert(data);
     })
+}
 
+function projectPreview() {
+
+    let name = $('#project_name').val()
+    let client = $('#client-select option:selected').text()
+    let tw_retweets_target = $('#tw_retweets_target').val()
+    let tw_impression_target = $('#tw_impression_target').val()
+    let tw_comments_target = $('#tw_comments_target').val()
+    let fb_likes_share_target = $('#fb_likes_share_target').val()
+    let fb_click_target = $('#fb_click_target').val()
+    let fb_comments_target = $('#fb_comments_target').val()
+    let blog_pageview_target = $('#blog_pageview_target').val()
+    let blog_bannerclicks_target = $('#blog_bannerclicks_target').val()
+    let blog_online_sale_target = $('#blog_online_sale_target').val()
+    let duration = $('#duration').val()
+    let accountManager = $('#acm-select option:selected').text()
+    let launchDate = $('#launchDate').val()
+
+    $('#project_preview_body').html(`
+        <h2>Name: ${name}</h2>
+        Duration: ${duration} weeks<br>
+        Launch date: ${launchDate}<br>
+        Account Manager: ${accountManager}<br>
+        Client: ${client}<br>
+        <hr>
+        <h3>Medinfi</h3>
+        Page views target: ${blog_pageview_target}<br>
+        Banner clicks target: ${blog_bannerclicks_target}<br>
+        Online sales target: ${blog_online_sale_target}<br>
+        <hr>
+        <h3>Facebook</h3>
+        Likes and Shares target: ${fb_likes_share_target}<br>
+        Click to site target: ${fb_click_target}<br>
+        Comments target: ${fb_comments_target}<br>
+        <hr>
+        <h3>Twitter</h3>
+        Impression target: ${tw_impression_target}<br>
+        Retweets target: ${tw_retweets_target}<br>
+        Comments target: ${tw_comments_target}<br>
+    `);
 }
 
 function setCompanyList() {

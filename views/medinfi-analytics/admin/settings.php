@@ -175,7 +175,7 @@
                                     </div>
                                     <div class="form-row" style="margin-top:20px;margin-bottom:20px;">
                                         <div class="col">
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#project-prev" style="margin-right:3px;">Preview</button>
+                                            <button class="btn btn-outline-secondary" id="project-preview-btn" type="button" data-toggle="modal" data-target="#project-prev" style="margin-right:3px;">Preview</button>
                                             <button class="btn btn-primary" id="add-project-btn" type="button" style="margin-left:20px;">Create</button>
                                             <div
                                                 class="modal fade" role="dialog" tabindex="-1" id="project-prev">
@@ -183,7 +183,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h4 class="modal-title">Preview</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                                                        <div class="modal-body" id="project_preview">
+                                                        <div class="modal-body" id="project_preview_body">
                                                             
                                                         </div>
                                                         <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button></div>
