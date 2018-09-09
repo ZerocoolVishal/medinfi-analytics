@@ -7,7 +7,7 @@ use app\dao\MedinfiAnalyticsDao;
 class MedinfiAnalyticsServiceImpl {
 
     public static function getTestDatabase() {
-        return MedinfiAnalyticsDao::getPorjectWeekMartric(11, "24-09-2018");
+        return MedinfiAnalyticsDao::test();
     }
 
     //Returns list of all companies account managers and clients

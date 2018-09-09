@@ -7,6 +7,8 @@ use app\models\Project;
 use app\models\Company;
 use app\models\Client;
 use app\models\Projectweek;
+use app\models\Blogweekmatric;
+use app\models\Blog;
 
 class MedinfiAnalyticsDao {
 
@@ -222,6 +224,7 @@ class MedinfiAnalyticsDao {
         self::addProjectweek($project->launchDate, $project->duration, $project->id);
     }
 
+    //creates the projectweek table
     static function addProjectweek($launchDate, $projectDuration, $project) {
 
         $startDate = $launchDate;
@@ -247,7 +250,8 @@ class MedinfiAnalyticsDao {
         }
     }
 
-    public static function getPorjectWeekMartric($porject, $launchDate) {
+    //Gives the projectweek id
+    static function getProjectWeekId($porject, $launchDate) {
 
         $projectId = $porject;
         $launchDate = $launchDate;
@@ -265,39 +269,71 @@ class MedinfiAnalyticsDao {
         // /print_r($projectWeeks);
     }
 
-    public static function addBlogWeekMatric(array $data = null) {
+    //Adds data to the blog table and creates blogweekmatric table
+    public static function addBlog(array $data) {
+
+        $blog = new Blog();
+        $blog->url = $data['url'];
+        $blog->launchDate = $data['launchDate'];
+        $blog->project = $data['project'];
+        $blog->name = $data['name'];
+        $res = $blog->save();
+        echo $res;
+
+        //Creating a blogweekmatric for that blog
+        $res = self::createBlogWeekMatric($blog->project);
+        echo $res;
+    }
+
+    //Create the blogweekmatric for given project ID
+    public static function createBlogWeekMatric($projectId) {
         
         $blogweekmatric = new Blogweekmatric();
 
-        //TODO
-        $blogweekmatric->blog = 1;
-
-        $blogweekmatric->projectWeek = self::getPorjectWeekMartric($data['projectId'], $data['launchDate']);
-
-        $blogweekmatric->tw_retweets = $data['tw_retweets'];
-        $blogweekmatric->tw_impression = $data['tw_impression'];
-        $blogweekmatric->tw_comments = $data['tw_comments'];
-
-        $blogweekmatric->fb_likes_share = $data['fb_likes_share'];
-        $blogweekmatric->fb_click = $data['fb_click'];
-        $blogweekmatric->fb_comments = $data['fb_comments'];
-
-        $blogweekmatric->blog_pageview = $data['blog_pageview'];
-        $blogweekmatric->blog_bannerclicks = $data['blog_bannerclicks'];
-        $blogweekmatric->blog_online_sale = $data['blog_online_sale'];   
-        
+        $blogweekmatric->blog = $projectId;
+        $blogweekmatric->projectWeek = self::getProjectWeekId($data['projectId'], $data['launchDate']);
+    
         $blogweekmatric->save();
     }
 
-    public static function addFacebookWeekmatric() {
+    public static function addBlogWeekMatricData() {
+        //TODO: Implement
+        $blogweekmatric->blog_pageview = $data['blog_pageview'];
+        $blogweekmatric->blog_bannerclicks = $data['blog_bannerclicks'];
+        $blogweekmatric->blog_online_sale = $data['blog_online_sale'];
+    }
 
+    public static function addFacebookWeekmatricData() {
+        //TODO: Impliment
+        $blogweekmatric->fb_likes_share = $data['fb_likes_share'];
+        $blogweekmatric->fb_click = $data['fb_click'];
+        $blogweekmatric->fb_comments = $data['fb_comments'];
+    }
 
+    public static function addTwitterWeekmatricData() {
+        //TODO: Impliment
+        $blogweekmatric->tw_retweets = $data['tw_retweets'];
+        $blogweekmatric->tw_impression = $data['tw_impression'];
+        $blogweekmatric->tw_comments = $data['tw_comments'];
     }
 
     public static function test() {
-        $client = Client::find()->where(['id'=>1])->one();
-        print_r($client->projects);
-        //echo json_encode($client->company);
+        
+        /*$blogweekmatric = Blogweekmatric::find()->where(['id'=>4])->one();
+
+        $blogweekmatric->fb_likes_share = 200;
+        $blogweekmatric->fb_click = 200;
+        $blogweekmatric->fb_comments = 200;
+
+        $res = $blogweekmatric->save();
+        print_r($res);*/
+
+        $data['url'] = "https://www.medinfi.com/blog/importance-of-mouth-rinsing/";
+        $data['launchDate'] = "2018-09-09";
+        $data['project'] = 11;
+        $data['name'] = "Importance of Mouth Rinsing";    
+
+        print_r(self::addBlog($data));
     }
 }
 
