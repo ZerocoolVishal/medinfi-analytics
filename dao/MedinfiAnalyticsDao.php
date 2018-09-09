@@ -260,13 +260,11 @@ class MedinfiAnalyticsDao {
         $projectWeeks = Projectweek::find()->where(['project'=>$projectId])->all();
 
         foreach($projectWeeks as $projectWeek) {
-            
             if($launchDate >= strtotime($projectWeek->startDate) 
             && $launchDate <= strtotime($projectWeek->endDate)) {
                 return $projectWeek->id;
             }
         }
-        // /print_r($projectWeeks);
     }
 
     //Adds data to the blog table and creates blogweekmatric table
@@ -281,19 +279,32 @@ class MedinfiAnalyticsDao {
         echo $res;
 
         //Creating a blogweekmatric for that blog
-        $res = self::createBlogWeekMatric($blog->project);
+        $res = self::createBlogWeekMatric($blog->project, $blog->id, $blog->launchDate);
         echo $res;
     }
 
     //Create the blogweekmatric for given project ID
-    public static function createBlogWeekMatric($projectId) {
+    static function createBlogWeekMatric($projectId, $blogId, $launchDate) {
         
         $blogweekmatric = new Blogweekmatric();
 
-        $blogweekmatric->blog = $projectId;
-        $blogweekmatric->projectWeek = self::getProjectWeekId($data['projectId'], $data['launchDate']);
-    
-        $blogweekmatric->save();
+        $blogweekmatric->blog = $blogId;
+        $blogweekmatric->projectWeek = self::getProjectWeekId($projectId, $launchDate);
+        
+        $blogweekmatric->blog_pageview = 0;
+        $blogweekmatric->blog_bannerclicks = 0;
+        $blogweekmatric->blog_online_sale = 0;
+
+        $blogweekmatric->fb_likes_share = 0;
+        $blogweekmatric->fb_click = 0;
+        $blogweekmatric->fb_comments = 0;
+
+        $blogweekmatric->tw_retweets = 0;
+        $blogweekmatric->tw_impression = 0;
+        $blogweekmatric->tw_comments = 0;
+
+        $res = $blogweekmatric->save();
+        return $res;
     }
 
     public static function addBlogWeekMatricData() {
