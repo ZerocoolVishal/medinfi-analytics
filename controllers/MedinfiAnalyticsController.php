@@ -280,6 +280,14 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         MedinfiAnalyticsServiceImpl::addBlogWeekMatric();
     }
 
+    public function actionAddMedinfiBlog() {
+        $data['url'] = "https://www.medinfi.com/blog/importance-of-mouth-rinsing/";
+        $data['launchDate'] = "2018-09-09";
+        $data['project'] = 11;
+        $data['name'] = "Importance of Mouth Rinsing";
+        echo MedinfiAnalyticsServiceimpl::addBlog($data);
+    }
+
     public function actionTest() {
 
         $request = \Yii::$app->request->post();

@@ -54,4 +54,9 @@ class MedinfiAnalyticsServiceImpl {
     public static function addBlogWeekMatric(array $data = null) {
         MedinfiAnalyticsDao::addBlogWeekMatric($data);
     }
+
+    public static function addBlog(array $data) {
+        $res = MedinfiAnalyticsDao::addBlog($data);
+        return $res;
+    }
 }

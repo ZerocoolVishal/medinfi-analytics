@@ -276,11 +276,12 @@ class MedinfiAnalyticsDao {
         $blog->project = $data['project'];
         $blog->name = $data['name'];
         $res = $blog->save();
-        echo $res;
-
-        //Creating a blogweekmatric for that blog
-        $res = self::createBlogWeekMatric($blog->project, $blog->id, $blog->launchDate);
-        echo $res;
+        //echo $res;
+        if($res) {
+            //Creating a blogweekmatric for that blog
+            $res = self::createBlogWeekMatric($blog->project, $blog->id, $blog->launchDate);
+            return $res;
+        }
     }
 
     //Create the blogweekmatric for given project ID
@@ -307,11 +308,14 @@ class MedinfiAnalyticsDao {
         return $res;
     }
 
-    public static function addBlogWeekMatricData() {
+    public static function addBlogWeekMatricData(array $data) {
         //TODO: Implement
+        $blogweekmatric = Blogweekmatric::find()->where(['id'=>$data['id']])->one();
+
         $blogweekmatric->blog_pageview = $data['blog_pageview'];
         $blogweekmatric->blog_bannerclicks = $data['blog_bannerclicks'];
         $blogweekmatric->blog_online_sale = $data['blog_online_sale'];
+        return $blogweekmatric->save();
     }
 
     public static function addFacebookWeekmatricData() {
@@ -330,22 +334,13 @@ class MedinfiAnalyticsDao {
 
     public static function test() {
         
-        /*$blogweekmatric = Blogweekmatric::find()->where(['id'=>4])->one();
+        echo "testing addBlogWeekMatricData<br>"; 
 
-        $blogweekmatric->fb_likes_share = 200;
-        $blogweekmatric->fb_click = 200;
-        $blogweekmatric->fb_comments = 200;
+        $data['id'] = "17";
+        $data['blog_pageview'] = "10";
+        $data['blog_bannerclicks'] = "10";
+        $data['blog_online_sale'] = "10";
 
-        $res = $blogweekmatric->save();
-        print_r($res);*/
-
-        $data['url'] = "https://www.medinfi.com/blog/importance-of-mouth-rinsing/";
-        $data['launchDate'] = "2018-09-09";
-        $data['project'] = 11;
-        $data['name'] = "Importance of Mouth Rinsing";    
-
-        print_r(self::addBlog($data));
+        print_r(self::addBlogWeekMatricData($data));
     }
 }
-
-//TODO: SELECT * FROM `projectweek` WHERE ('2018-09-20' BETWEEN `startDate` AND `endDate`) AND (`project` = 11)
