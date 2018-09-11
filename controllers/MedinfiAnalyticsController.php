@@ -153,11 +153,6 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         }
     }
 
-    public function actionDatabase() {
-        //MedinfiAnalyticsServiceImpl::getProjectListOf(['acmId'=>1]);
-        echo MedinfiAnalyticsServiceImpl::getTestDatabase();
-    }
-
     //http://localhost/medinfi-analytics/web/?r=medinfi-analytics/add-company&companyName=Demo&contactPerson=vishal&email=demo@demo&mobile=1234567890
     public function actionAddCompany() {
 
@@ -294,5 +289,10 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         if(isset($request)) {
              print_r($request['name']);
         }
+    }
+
+    public function actionDatabase() {
+        //MedinfiAnalyticsServiceImpl::getProjectListOf(['acmId'=>1]);
+        echo MedinfiAnalyticsServiceImpl::getTestDatabase();
     }
 }
