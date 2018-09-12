@@ -193,6 +193,11 @@ class MedinfiAnalyticsDao {
         return $res;
     }
 
+    /**
+     * Adds a new project and adds project weeks according to the duration of peoject
+     * 
+     * @property data: project data array
+     */
     public static function addProject(array $data) {
         print_r($data);
         //echo "Add project";
@@ -224,7 +229,13 @@ class MedinfiAnalyticsDao {
         self::addProjectweek($project->launchDate, $project->duration, $project->id);
     }
 
-    //creates the projectweek table
+    /**
+     * Creates the project week for project from given launchdate, duration
+     * 
+     * @property launchDate: launchdate of the project
+     * @property  projectDuration: duration of the project in weeks
+     * @property project: ID of the project
+     */
     static function addProjectweek($launchDate, $projectDuration, $project) {
 
         $startDate = $launchDate;
@@ -250,7 +261,9 @@ class MedinfiAnalyticsDao {
         }
     }
 
-    //Gives the projectweek id
+    /**
+     * Gives the proojectweek ID from given projectID and launchDate
+     */
     static function getProjectWeek($porject, $launchDate) {
 
         $projectId = $porject;
@@ -267,7 +280,10 @@ class MedinfiAnalyticsDao {
         }
     }
 
-    //Adds data to the blog table and creates blogweekmatric table
+    /**
+     * Adds data to the blog table and creates blogweekmatric table
+     * for each projectweek one blogweekmatric will get added
+     */
     public static function addBlog(array $data) {
 
         $blog = new Blog();
@@ -290,7 +306,14 @@ class MedinfiAnalyticsDao {
         }
     }
 
-    //Create the blogweekmatric for given project ID
+    /**
+     * Create the blogweekmatric for given project ID
+     * 
+     * @property blogId: ID of the Blog
+     * @property projectWeekId: projectweek ID
+     * 
+     * @return Blog blog;
+     */
     static function createBlogWeekMatric($blogId, $projectWeekId) {
         
         $blogweekmatric = new Blogweekmatric();
@@ -314,7 +337,14 @@ class MedinfiAnalyticsDao {
         return $res;
     }
 
-    //returns the blog of name and launchdate
+    /**
+     * This method returns the blog from given blog name and projectId
+     * 
+     * @property blogName: name of the Blog
+     * @property projectId: ID of the project
+     * 
+     * @return Blog blog;
+     */
     static function getBlog($blogName, $projectId) {
         $blog = Blog::find()->where(['name'=>$blogName, 'project' => $projectId])->one();
         if($blog) {
@@ -325,7 +355,12 @@ class MedinfiAnalyticsDao {
         }
     }
 
-    //NOTE: $date means the date of the date a capture
+    /**
+     * @property projectId: ID of the project
+     * @property blogName: name of the Blog
+     * @property date: data of the data capture
+     * @property array data: [blog_pageview, blog_bannerclicks, blog_online_sale]
+     */
     public static function addBlogWeekMatricData($projectId, $blogName, $date, $data) {
         //TODO: Implement
         //$project = Project::find()->where(['id' => $projectId])->one();
@@ -349,6 +384,12 @@ class MedinfiAnalyticsDao {
 
     }
 
+    /**
+     * @property projectId: ID of the project
+     * @property blogName: name of the Blog
+     * @property date: data of the data capture
+     * @property array data: [fb_likes_share, fb_click, fb_comments]
+     */
     public static function addFacebookWeekmatricData($projectId, $blogName, $date, $data) {
         $blog = self::getBlog($blogName, $projectId);
         $projectWeek = self::getProjectWeek($projectId, $date);
@@ -368,6 +409,12 @@ class MedinfiAnalyticsDao {
         return $res;
     }
 
+    /**
+     * @property projectId: ID of the project
+     * @property blogName: name of the Blog
+     * @property date: data of the data capture
+     * @property array data: [tw_retweets, tw_impression, tw_comments]
+     */
     public static function addTwitterWeekmatricData($projectId, $blogName, $date, $data) {
         $blog = self::getBlog($blogName, $projectId);
         $projectWeek = self::getProjectWeek($projectId, $date);
