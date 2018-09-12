@@ -251,7 +251,7 @@ class MedinfiAnalyticsDao {
     }
 
     //Gives the projectweek id
-    static function getProjectWeekId($porject, $launchDate) {
+    static function getProjectWeek($porject, $launchDate) {
 
         $projectId = $porject;
         $launchDate = $launchDate;
@@ -262,7 +262,7 @@ class MedinfiAnalyticsDao {
         foreach($projectWeeks as $projectWeek) {
             if($launchDate >= strtotime($projectWeek->startDate) 
             && $launchDate <= strtotime($projectWeek->endDate)) {
-                return $projectWeek->id;
+                return $projectWeek;
             }
         }
     }
@@ -279,18 +279,24 @@ class MedinfiAnalyticsDao {
         //echo $res;
         if($res) {
             //Creating a blogweekmatric for that blog
-            $res = self::createBlogWeekMatric($blog->project, $blog->id, $blog->launchDate);
-            return $res;
+            $project = Project::find()->where(['id'=>$blog->project])->one();
+            foreach ($project->projectweeks as $pw) {
+                /*echo "<pre>";
+                print_r($val);
+                echo "</pre>";*/
+                $res = self::createBlogWeekMatric($blog->id, $pw->id);
+                echo $res;
+            }
         }
     }
 
     //Create the blogweekmatric for given project ID
-    static function createBlogWeekMatric($projectId, $blogId, $launchDate) {
+    static function createBlogWeekMatric($blogId, $projectWeekId) {
         
         $blogweekmatric = new Blogweekmatric();
 
         $blogweekmatric->blog = $blogId;
-        $blogweekmatric->projectWeek = self::getProjectWeekId($projectId, $launchDate);
+        $blogweekmatric->projectWeek = $projectWeekId;
         
         $blogweekmatric->blog_pageview = 0;
         $blogweekmatric->blog_bannerclicks = 0;
@@ -309,8 +315,8 @@ class MedinfiAnalyticsDao {
     }
 
     //returns the blog of name and launchdate
-    static function getBlog($blogName, $launchDate) {
-        $blog = Blog::find()->where(['name'=>$blogName, 'launchDate' => $launchDate])->one();
+    static function getBlog($blogName, $projectId) {
+        $blog = Blog::find()->where(['name'=>$blogName, 'project' => $projectId])->one();
         if($blog) {
             return $blog;
         }
@@ -319,60 +325,81 @@ class MedinfiAnalyticsDao {
         }
     }
 
-    public static function addBlogWeekMatricData($blogName, $launchDate, $data) {
+    //NOTE: $date means the date of the date a capture
+    public static function addBlogWeekMatricData($projectId, $blogName, $date, $data) {
         //TODO: Implement
-        $blog = self::getBlog($blogName, $launchDate);
-        $projectWeeks = self::getProjectWeekId($blog->project, $launchDate);
+        //$project = Project::find()->where(['id' => $projectId])->one();
 
-        $blogweekmatric = Blogweekmatric::find()->where(['blog'=>$blog->id, 'projectWeek' => $projectWeeks])->one();
+        $blog = self::getBlog($blogName, $projectId);
+        $projectWeek = self::getProjectWeek($projectId, $date);
+
+        $blogweekmatric = Blogweekmatric::find()->where(['blog'=>$blog->id, 'projectWeek' => $projectWeek->id])->one();
 
         $blogweekmatric->blog_pageview = $data['blog_pageview'];
         $blogweekmatric->blog_bannerclicks = $data['blog_bannerclicks'];
         $blogweekmatric->blog_online_sale = $data['blog_online_sale'];
-        //return $blogweekmatric->save();
+        $res = $blogweekmatric->save();
 
+        echo $res;
         echo "<pre>";
         print_r($blogweekmatric);
         echo "</pre>";
+
+        return $res;
+
     }
 
-    public static function addFacebookWeekmatricData() {
-        //TODO: Impliment
+    public static function addFacebookWeekmatricData($projectId, $blogName, $date, $data) {
+        $blog = self::getBlog($blogName, $projectId);
+        $projectWeek = self::getProjectWeek($projectId, $date);
+
+        $blogweekmatric = Blogweekmatric::find()->where(['blog'=>$blog->id, 'projectWeek' => $projectWeek->id])->one();
+
         $blogweekmatric->fb_likes_share = $data['fb_likes_share'];
         $blogweekmatric->fb_click = $data['fb_click'];
         $blogweekmatric->fb_comments = $data['fb_comments'];
+        $res = $blogweekmatric->save();
+
+        echo $res;
+        echo "<pre>";
+        print_r($blogweekmatric);
+        echo "</pre>";
+
+        return $res;
     }
 
-    public static function addTwitterWeekmatricData() {
-        //TODO: Implimentcd
+    public static function addTwitterWeekmatricData($projectId, $blogName, $date, $data) {
+        $blog = self::getBlog($blogName, $projectId);
+        $projectWeek = self::getProjectWeek($projectId, $date);
+
+        $blogweekmatric = Blogweekmatric::find()->where(['blog'=>$blog->id, 'projectWeek' => $projectWeek->id])->one();
+
         $blogweekmatric->tw_retweets = $data['tw_retweets'];
         $blogweekmatric->tw_impression = $data['tw_impression'];
         $blogweekmatric->tw_comments = $data['tw_comments'];
+        $res = $blogweekmatric->save();
+
+        echo $res;
+        echo "<pre>";
+        print_r($blogweekmatric);
+        echo "</pre>";
+
+        return $res;
     }
 
     public static function test() {
         
-        echo "testing BlogID<br>"; 
+        echo "Testing addTwitterWeekmatricData<br>";
 
-        /*$data['id'] = "17";
-        $data['blog_pageview'] = "10";
-        $data['blog_bannerclicks'] = "10";
-        $data['blog_online_sale'] = "10";
-        
-        print_r(self::addBlogWeekMatricData($data));*/
+        $projectId = 11;
+        $blogName = "Eczema: Types, Causes & Symptoms";
+        $date = "2018-09-10";
 
-        /*$blog = Blog::find()->where(['name' => 'Importance of Mouth Rinsing'])->one();
-        $blogweekmatric = $blog->blogweekmatrics;
+        $data['tw_retweets'] = 200;
+        $data['tw_impression'] = 300;
+        $data['tw_comments'] = 400;
 
-        echo $blog->id;
-        echo "<pre>";
-        print_r($blogweekmatric);
-        echo "</pre>";*/
-
-        $data['blog_pageview'] = 100;
-        $data['blog_bannerclicks'] = 100;
-        $data['blog_online_sale'] = 100;
-        self::addBlogWeekMatricData("Importance of Mouth Rinsing", "2018-09-09", $data);
+        self::addTwitterWeekmatricData($projectId, $blogName, $date ,$data);
     }
 
     public static function testcron() {

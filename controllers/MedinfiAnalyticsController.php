@@ -275,12 +275,41 @@ class MedinfiAnalyticsController extends \yii\web\Controller
         MedinfiAnalyticsServiceImpl::addBlogWeekMatric();
     }
 
+    //TODO: Impliment with post
     public function actionAddMedinfiBlog() {
         $data['url'] = "https://www.medinfi.com/blog/importance-of-mouth-rinsing/";
         $data['launchDate'] = "2018-09-09";
         $data['project'] = 11;
         $data['name'] = "Importance of Mouth Rinsing";
         echo MedinfiAnalyticsServiceimpl::addBlog($data);
+    }
+
+    //TODO: Impliment with post
+    public function actionAddFacebookWeekmatricData()
+    {
+        $projectId = 11;
+        $blogName = "Eczema: Types, Causes & Symptoms";
+        $date = "2018-09-10";
+
+        $data['fb_likes_share'] = 10;
+        $data['fb_click'] = 10;
+        $data['fb_comments'] = 10;
+
+        MedinfiAnalyticsServiceimpl::addFacebookWeekmatricData($projectId, $blogName, $date ,$data);
+    }
+
+    //TODO: Impliment with post
+    public function actionAddTwitterWeekmatricData()
+    {
+        $projectId = 11;
+        $blogName = "Eczema: Types, Causes & Symptoms";
+        $date = "2018-09-10";
+
+        $data['tw_retweets'] = 10;
+        $data['tw_impression'] = 10;
+        $data['tw_comments'] = 10;
+
+        MedinfiAnalyticsServiceimpl::addTwitterWeekmatricData($projectId, $blogName, $date ,$data);
     }
 
     public function actionTest() {

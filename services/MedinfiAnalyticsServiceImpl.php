@@ -59,4 +59,12 @@ class MedinfiAnalyticsServiceImpl {
         $res = MedinfiAnalyticsDao::addBlog($data);
         return $res;
     }
+
+    public static function addFacebookWeekmatricData($projectId, $blogName, $date, $data) {
+        MedinfiAnalyticsDao::addFacebookWeekmatricData($projectId, $blogName, $date, $data);
+    }
+
+    public static function addTwitterWeekmatricData($projectId, $blogName, $date, $data) {
+        MedinfiAnalyticsDao::addTwitterWeekmatricData($projectId, $blogName, $date, $data);
+    }
 }
